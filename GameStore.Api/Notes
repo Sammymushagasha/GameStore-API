@@ -1,0 +1,9 @@
+Object-Relational Mapping (ORM) - A techniuqe for converting data between a relational database and an OOP
+
+Entity Framework Core - A lightweight, extensible, open source and cross-platform object-relational apper for .NET
+
+Dependency Injection = 
+
+Asynchronous = multiple tasks performing at once
+
+Syncronous = One task is done at a time

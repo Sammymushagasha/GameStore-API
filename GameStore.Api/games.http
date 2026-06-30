@@ -1,0 +1,39 @@
+GET http://localhost:5086/games
+
+###
+
+GET http://localhost:5086/games/1
+
+###
+
+POST http://localhost:5086/games
+Content-Type: application/json
+
+{
+    "name": "Test Game",
+    "genreId": 1,
+    "price": "29.99",
+    "releaseDate": "2027-01-03"
+}
+
+###
+PUT http://localhost:5086/games/2
+Content-Type: application/json
+
+
+ {
+    "name": "Mortal Combat II Max",
+    "genreId": 1,
+    "price": 19.99,
+    "releaseDate": "2015-06-18"
+  }
+
+
+###
+DELETE http://localhost:5086/games/1
+
+###
+
+GET http://localhost:5086/genres
+
+
