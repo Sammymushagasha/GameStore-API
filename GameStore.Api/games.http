@@ -17,20 +17,19 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:5086/games/2
+PUT http://localhost:5086/games/1
 Content-Type: application/json
 
-
  {
-    "name": "Mortal Combat II Max",
+    "name": "Call of Duty Black Ops 2",
     "genreId": 1,
-    "price": 19.99,
-    "releaseDate": "2015-06-18"
+    "price": 49.99,
+    "releaseDate": "2012-06-18"
   }
 
 
 ###
-DELETE http://localhost:5086/games/1
+DELETE http://localhost:5086/games/7
 
 ###
 

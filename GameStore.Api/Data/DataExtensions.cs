@@ -11,6 +11,7 @@ public static class DataExtensions
 
         using var scope = app.Services.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<GameStoreContext>(); // this gives us access to an instance of db context
+      //  dbContext.Database.EnsureDeleted(); //Deletes the data in the database
         dbContext.Database.Migrate(); // allows for migration of the db when running build
 
     }
