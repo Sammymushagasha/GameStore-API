@@ -2399,19 +2399,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\MUSHASX1\\.nuget\\packages\\": {}
+    "C:\\Users\\sammy\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\MUSHASX1\\Desktop\\GameStore\\GameStore-API\\GameStore.Api\\GameStore.Api.csproj",
+      "projectUniqueName": "C:\\Users\\sammy\\OneDrive\\Desktop\\GameStore\\GameStore-API\\GameStore.Api\\GameStore.Api.csproj",
       "projectName": "GameStore.Api",
-      "projectPath": "C:\\Users\\MUSHASX1\\Desktop\\GameStore\\GameStore-API\\GameStore.Api\\GameStore.Api.csproj",
-      "packagesPath": "C:\\Users\\MUSHASX1\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\MUSHASX1\\Desktop\\GameStore\\GameStore-API\\GameStore.Api\\obj\\",
+      "projectPath": "C:\\Users\\sammy\\OneDrive\\Desktop\\GameStore\\GameStore-API\\GameStore.Api\\GameStore.Api.csproj",
+      "packagesPath": "C:\\Users\\sammy\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\sammy\\OneDrive\\Desktop\\GameStore\\GameStore-API\\GameStore.Api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\MUSHASX1\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\sammy\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
