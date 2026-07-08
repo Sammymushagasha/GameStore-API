@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "MMS3wH91CrU=",
+  "success": true,
+  "projectFilePath": "c:\\Users\\sammy\\OneDrive\\Desktop\\GameStore\\GameStore-API\\GameStore-Frontend\\BlazorApp1\\BlazorApp1.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\sammy\\.nuget\\packages\\microsoft.aspnetcore.app.internal.assets\\10.0.9\\microsoft.aspnetcore.app.internal.assets.10.0.9.nupkg.sha512"
+  ],
+  "logs": []
+}
