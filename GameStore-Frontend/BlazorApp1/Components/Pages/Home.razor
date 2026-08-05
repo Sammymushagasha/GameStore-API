@@ -1,15 +1,242 @@
 ﻿@page "/"
+@rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
 
-<h1 style="display: flex; justify-content: center;">Game Store</h1>
+<div class="home-shell">
+    <h1 class="home-title">Game Store</h1>
 
+    <div class="home-actions">
+        <button class="btn btn-primary btn-lg" @onclick="OpenAddGameModal">Add Game</button>
+    </div>
 
-@* <input type="text" @bind="Game" class="form-control" /> *@
+    @if (!string.IsNullOrWhiteSpace(pageError))
+    {
+        <div class="alert alert-danger mt-4" role="alert">@pageError</div>
+    }
 
-@code {
-    private string Game { get; set; }
+    @if (isLoading)
+    {
+        <p class="mt-4"><em>Loading games...</em></p>
+    }
+    else
+    {
+        <div class="table-responsive mt-4">
+            <table class="table table-striped table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Genre</th>
+                        <th>Price</th>
+                        <th>Release Date</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (games.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="5">No games added yet.</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var game in games)
+                        {
+                            <tr>
+                                <td>@game.Name</td>
+                                <td>@game.Genre</td>
+                                <td>@game.Price.ToString("C")</td>
+                                <td>@game.ReleaseDate.ToString("yyyy-MM-dd")</td>
+                                <td class="text-end">
+                                    <button
+                                        class="btn btn-outline-danger btn-sm"
+                                        disabled="@(isSubmitting || deletingGameId == game.Id)"
+                                        @onclick="() => DeleteGameAsync(game.Id)">
+                                        @(deletingGameId == game.Id ? "Deleting..." : "DELETE")
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+@if (showAddGameModal)
+{
+    <div class="modal-backdrop-custom" @onclick="CloseAddGameModal"></div>
+    <div class="modal-dialog-custom" role="dialog" aria-modal="true" aria-labelledby="addGameModalTitle">
+        <div class="card shadow">
+            <div class="card-body">
+                <h4 id="addGameModalTitle" class="card-title mb-3">Add Game</h4>
+
+                @if (!string.IsNullOrWhiteSpace(modalError))
+                {
+                    <div class="alert alert-danger" role="alert">@modalError</div>
+                }
+
+                <EditForm Model="newGame" OnValidSubmit="SubmitNewGameAsync">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+
+                    <div class="mb-3">
+                        <label class="form-label">Name of the Game</label>
+                        <InputText class="form-control" @bind-Value="newGame.Name" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Price of the Game</label>
+                        <InputNumber class="form-control" @bind-Value="newGame.Price" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Genre of the Game</label>
+                        <InputSelect class="form-select" @bind-Value="newGame.GenreId">
+                            <option value="0">Select a genre</option>
+                            @foreach (var genre in genres)
+                            {
+                                <option value="@genre.Id">@genre.Name</option>
+                            }
+                        </InputSelect>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Release Date</label>
+                        <InputDate class="form-control" @bind-Value="newGame.ReleaseDate" />
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <button type="button" class="btn btn-outline-secondary" @onclick="CloseAddGameModal" disabled="@isSubmitting">Cancel</button>
+                        <button type="submit" class="btn btn-success" disabled="@isSubmitting">@(isSubmitting ? "Submitting..." : "Submit")</button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
 }
 
-@* <Counter IncrementAmount="10"/> *@
+@code {
+    [Inject] private GameStoreApiClient ApiClient { get; set; } = default!;
+
+    private static readonly string[] PreferredGenres = ["Fighting", "Sports", "Action", "RPG", "Puzzle"];
+
+    private readonly List<GameSummaryDto> games = [];
+    private readonly List<GenreDto> genres = [];
+
+    private bool isLoading = true;
+    private bool isSubmitting;
+    private bool showAddGameModal;
+    private int? deletingGameId;
+    private string? pageError;
+    private string? modalError;
+
+    private CreateGameRequest newGame = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDataAsync();
+    }
+
+    private async Task LoadDataAsync()
+    {
+        isLoading = true;
+        pageError = null;
+
+        try
+        {
+            var gamesData = await ApiClient.GetGamesAsync();
+            var genresData = await ApiClient.GetGenresAsync();
+
+            games.Clear();
+            games.AddRange(gamesData.OrderBy(game => game.Name));
+
+            genres.Clear();
+            genres.AddRange(OrderPreferredGenres(genresData));
+        }
+        catch (Exception ex)
+        {
+            pageError = $"Could not load API data: {ex.Message}";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void OpenAddGameModal()
+    {
+        modalError = null;
+        newGame = new CreateGameRequest();
+        showAddGameModal = true;
+    }
+
+    private void CloseAddGameModal()
+    {
+        showAddGameModal = false;
+    }
+
+    private async Task SubmitNewGameAsync()
+    {
+        if (newGame.GenreId <= 0)
+        {
+            modalError = "Please choose a genre.";
+            return;
+        }
+
+        isSubmitting = true;
+        modalError = null;
+
+        try
+        {
+            await ApiClient.CreateGameAsync(newGame);
+            showAddGameModal = false;
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            modalError = $"Could not add game: {ex.Message}";
+        }
+        finally
+        {
+            isSubmitting = false;
+        }
+    }
+
+    private async Task DeleteGameAsync(int id)
+    {
+        deletingGameId = id;
+        pageError = null;
+
+        try
+        {
+            await ApiClient.DeleteGameAsync(id);
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            pageError = $"Could not delete game: {ex.Message}";
+        }
+        finally
+        {
+            deletingGameId = null;
+        }
+    }
+
+    private static IEnumerable<GenreDto> OrderPreferredGenres(IEnumerable<GenreDto> apiGenres)
+    {
+        var apiGenresByName = apiGenres
+            .ToDictionary(genre => genre.Name, StringComparer.OrdinalIgnoreCase);
+
+        foreach (var preferredGenre in PreferredGenres)
+        {
+            if (apiGenresByName.TryGetValue(preferredGenre, out var genre))
+            {
+                yield return genre;
+            }
+        }
+    }
+}
 

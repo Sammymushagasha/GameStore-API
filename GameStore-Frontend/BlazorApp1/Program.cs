@@ -1,10 +1,23 @@
 using BlazorApp1.Components;
+using BlazorApp1.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+var apiBaseUrl = builder.Configuration["ApiSettings:BaseUrl"];
+
+if (string.IsNullOrWhiteSpace(apiBaseUrl))
+{
+    throw new InvalidOperationException("ApiSettings:BaseUrl is missing from configuration.");
+}
+
+builder.Services.AddHttpClient<GameStoreApiClient>(client =>
+{
+    client.BaseAddress = new Uri(apiBaseUrl);
+});
 
 var app = builder.Build();
 

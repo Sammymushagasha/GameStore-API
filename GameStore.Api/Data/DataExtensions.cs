@@ -32,16 +32,39 @@ public static class DataExtensions
             connString,
             optionsAction: options => options.UseSeeding((context, _) =>
             {
-                if(!context.Set<Genres>().Any())
-                {
-                    context.Set<Genres>().AddRange(
-                        new Genres {Name = "Fighting"},
-                        new Genres {Name = "RPG"},
-                        new Genres {Name = "Platformer"},
-                        new Genres {Name = "Racing"},
-                        new Genres {Name = "Sports"}
-                    );
+                string[] requiredGenres = ["Fighting", "Sports", "Action", "RPG", "Puzzle"];
 
+                var genres = context.Set<Genres>().ToList();
+                var existingGenreNames = genres
+                    .Select(genre => genre.Name)
+                    .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+                var missingGenres = requiredGenres
+                    .Where(requiredName => !existingGenreNames.Contains(requiredName))
+                    .Select(name => new Genres { Name = name })
+                    .ToList();
+
+                if (missingGenres.Count > 0)
+                {
+                    context.Set<Genres>().AddRange(missingGenres);
+                    context.SaveChanges();
+                }
+
+                var activeGenreIds = context
+                    .Set<Game>()
+                    .Select(game => game.GenreId)
+                    .ToHashSet();
+
+                var removableGenres = context
+                    .Set<Genres>()
+                    .Where(genre =>
+                        !requiredGenres.Contains(genre.Name) &&
+                        !activeGenreIds.Contains(genre.Id))
+                    .ToList();
+
+                if (removableGenres.Count > 0)
+                {
+                    context.Set<Genres>().RemoveRange(removableGenres);
                     context.SaveChanges();
                 }
             })

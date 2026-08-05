@@ -2,7 +2,7 @@
   "version": 4,
   "targets": {
     "net10.0": {
-      "Microsoft.AspNetCore.App.Internal.Assets/10.0.9": {
+      "Microsoft.AspNetCore.App.Internal.Assets/10.0.10": {
         "type": "package",
         "build": {
           "build/Microsoft.AspNetCore.App.Internal.Assets.props": {},
@@ -15,10 +15,10 @@
     }
   },
   "libraries": {
-    "Microsoft.AspNetCore.App.Internal.Assets/10.0.9": {
-      "sha512": "E9Wp/LPKAYkGOVBv4lt5U5TnUA/7pov7QZAwF3eI64kK8AAXqkPDwuadEOwpL1WXEfgecYm0fccluvABp32D8g==",
+    "Microsoft.AspNetCore.App.Internal.Assets/10.0.10": {
+      "sha512": "8k0KoYKvNrSqP8E3oDJMBVKavlTEE6BacdLGtEDcxv9Hz0XxWFkD6JdLJsxXUlGeAfZ6YfvWmxKenl73qeCTSA==",
       "type": "package",
-      "path": "microsoft.aspnetcore.app.internal.assets/10.0.9",
+      "path": "microsoft.aspnetcore.app.internal.assets/10.0.10",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -34,30 +34,30 @@
         "build/Microsoft.AspNetCore.App.Internal.Assets.targets",
         "buildMultiTargeting/Microsoft.AspNetCore.App.Internal.Assets.targets",
         "buildTransitive/Microsoft.AspNetCore.App.Internal.Assets.targets",
-        "microsoft.aspnetcore.app.internal.assets.10.0.9.nupkg.sha512",
+        "microsoft.aspnetcore.app.internal.assets.10.0.10.nupkg.sha512",
         "microsoft.aspnetcore.app.internal.assets.nuspec"
       ]
     }
   },
   "projectFileDependencyGroups": {
     "net10.0": [
-      "Microsoft.AspNetCore.App.Internal.Assets >= 10.0.9"
+      "Microsoft.AspNetCore.App.Internal.Assets >= 10.0.10"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\sammy\\.nuget\\packages\\": {}
+    "C:\\Users\\MUSHASX1\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\sammy\\OneDrive\\Desktop\\GameStore\\GameStore-API\\GameStore-Frontend\\BlazorApp1\\BlazorApp1.csproj",
+      "projectUniqueName": "C:\\Users\\MUSHASX1\\Desktop\\Gamestore-Application\\GameStore-API\\GameStore-Frontend\\BlazorApp1\\BlazorApp1.csproj",
       "projectName": "BlazorApp1",
-      "projectPath": "c:\\Users\\sammy\\OneDrive\\Desktop\\GameStore\\GameStore-API\\GameStore-Frontend\\BlazorApp1\\BlazorApp1.csproj",
-      "packagesPath": "C:\\Users\\sammy\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\sammy\\OneDrive\\Desktop\\GameStore\\GameStore-API\\GameStore-Frontend\\BlazorApp1\\obj\\",
+      "projectPath": "C:\\Users\\MUSHASX1\\Desktop\\Gamestore-Application\\GameStore-API\\GameStore-Frontend\\BlazorApp1\\BlazorApp1.csproj",
+      "packagesPath": "C:\\Users\\MUSHASX1\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\MUSHASX1\\Desktop\\Gamestore-Application\\GameStore-API\\GameStore-Frontend\\BlazorApp1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\sammy\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\MUSHASX1\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
@@ -92,7 +92,7 @@
           "Microsoft.AspNetCore.App.Internal.Assets": {
             "suppressParent": "All",
             "target": "Package",
-            "version": "[10.0.9, )",
+            "version": "[10.0.10, )",
             "autoReferenced": true
           }
         },
@@ -115,7 +115,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.302/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
