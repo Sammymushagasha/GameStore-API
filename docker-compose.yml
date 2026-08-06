@@ -1,0 +1,31 @@
+services:
+  gamestore-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gamestore-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__GameStore: Data Source=/app/data/GameStore.db
+    ports:
+      - "5086:8080"
+    volumes:
+      - gamestore-db:/app/data
+
+  gamestore-frontend:
+    build:
+      context: .
+      dockerfile: GameStore-Frontend/BlazorApp1/Dockerfile
+    container_name: gamestore-frontend
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8080
+      ApiSettings__BaseUrl: http://gamestore-api:8080/
+    ports:
+      - "5169:8080"
+    depends_on:
+      - gamestore-api
+
+volumes:
+  gamestore-db:
